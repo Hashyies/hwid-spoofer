@@ -31,10 +31,11 @@ jobs:
       run: msbuild "Leinad Spoofer.sln" /p:Configuration=Release
 
     - name: Create Developer Package
+      # Build the packaging project in developer mode (unsigned)
       run: msbuild "Leinad Spoofer.Package/Leinad Spoofer.Package.wapproj" /p:Configuration=Release /p:UapAppxPackageBuildMode=Developer /p:AppxBundle=Never
 
     - name: Upload Package Artifact
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@v4
       with:
         name: Leinad Spoofer MSIX Package
         path: Leinad\ Spoofer.Package/AppPackages

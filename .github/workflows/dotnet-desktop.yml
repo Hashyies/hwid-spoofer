@@ -24,14 +24,15 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore Solution
-      run: msbuild "Leinad Spoofer.sln" /t:Restore /p:Configuration=Release
+    # Restore all NuGet packages referenced by the solution.
+    - name: Restore NuGet Packages
+      run: nuget restore "Leinad Spoofer.sln"
 
     - name: Build Solution
       run: msbuild "Leinad Spoofer.sln" /p:Configuration=Release
 
     - name: Create Developer Package
-      # Build the packaging project in developer mode (unsigned)
+      # Build the packaging project in developer mode (unsigned).
       run: msbuild "Leinad Spoofer.Package/Leinad Spoofer.Package.wapproj" /p:Configuration=Release /p:UapAppxPackageBuildMode=Developer /p:AppxBundle=Never
 
     - name: Upload Package Artifact
